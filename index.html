@@ -743,61 +743,118 @@
             // -------------------------------------------------------------------------
             // 14. ПЕРЕВІР СЕБЕ: тести, ігри, квести (quiz) - 8 КРУГІВ
             // -------------------------------------------------------------------------
-            } else if (sectionId === 'quiz') {
-                 let quizLinksHTML = QUIZ_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index * 5 % INTERACTIVE_COLORS.length]; // Вибираємо контрастні кольори
-                    return `
-                        <a id="link-quiz-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
+          } else if (sectionId === 'quiz') {
+    // Дані для 8 посилань (тести, квести тощо)
+    const QUIZ_LINKS_DATA = [
+        { emoji: "🩹", theme: "Перша медична допомога при опіках", url: "https://wordwall.net/uk/resource/13144641/%d0%b7%d0%b0%d1%85%d0%b8%d1%81%d1%82-%d1%83%d0%ba%d1%80%d0%b0%d1%97%d0%bd%d0%b8/%d0%bf%d0%b5%d1%80%d1%88%d0%b0-%d0%b4%d0%be%d0%bf%d0%be%d0%bc%d0%be%d0%b3%d0%b0-%d0%bf%d1%80%d0%b8-%d1%82%d0%b5%d1%80%d0%bc%d1%96%d1%87%d0%bd%d0%b8%d1%85-%d0%be%d0%bf%d1%96%d0%ba%d0%b0%d1%85" },
+        { emoji: "⚡", theme: "Домедична допомога при ураженні струмом", url: "https://wordwall.net/uk/resource/9819525/%d0%b7%d0%b0%d1%85%d0%b8%d1%81%d1%82-%d1%83%d0%ba%d1%80%d0%b0%d1%97%d0%bd%d0%b8/%d1%83%d1%80%d0%b0%d0%b6%d0%b5%d0%bd%d0%bd%d1%8f-%d0%b5%d0%bb%d0%b5%d0%ba%d1%82%d1%80%d0%b8%d1%87%d0%bd%d0%b8%d0%bc-%d1%81%d1%82%d1%80%d1%83%d0%bc%d0%be%d0%bc-%d0%b1%d0%bb%d0%b8%d1%81%d0%ba%d0%b0%d0%b2%d0%ba%d0%be%d1%8e" },
+        { emoji: "🚑", theme: "Домедична допомога", url: "https://learningapps.org/watch?v=p1ns8roon24" },
+        { emoji: "🛡️", theme: "Способи захисту у надзвичайних ситуаціях", url: "https://wordwall.net/uk/resource/13185160/%d0%b7%d0%b0%d1%85%d0%b8%d1%81%d1%82-%d1%83%d0%ba%d1%80%d0%b0%d1%97%d0%bd%d0%b8/%d0%be%d1%81%d0%bd%d0%be%d0%b2%d0%bd%d1%96-%d1%81%d0%bf%d0%be%d1%81%d0%be%d0%b1%d0%b8-%d0%b7%d0%b0%d1%85%d0%b8%d1%81%d1%82%d1%83-%d0%bd%d0%b0%d1%81%d0%b5%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f-%d0%b2" },
+        { emoji: "😟", theme: "Кризова ситуація", url: "https://vseosvita.ua/webquest/play?code=owysi677" },
+        { emoji: "🌸", theme: "Передбачення на весняні канікули", url: "https://docs.google.com/presentation/d/1MPuNkmCLyx-EwPqF2frxSV6-aHpw7yKB/edit" },
+        { emoji: "☀️", theme: "Передбачення на літні канікули", url: "https://docs.google.com/presentation/d/1acZwrD8fzrS27MbLkZY8JbJfh7lRl_wU/edit" },
+        { emoji: "❄️", theme: "Передбачення на зимові канікули", url: "https://docs.google.com/presentation/d/1e8puExo1AamlW9BGhcX8Mo2qf7drKViw/edit" }
+    ];
 
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-emerald-700 border-b pb-2">✅ Інтерактивна зона (Тести та Квести)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть тему, щоб перейти до тестів, вікторин чи інтерактивних завдань для перевірки своїх знань.
-                    </p>
+    // Кольори для кнопок (чергуються)
+    const INTERACTIVE_COLORS = [
+        "bg-blue-100 hover:bg-blue-200",
+        "bg-pink-100 hover:bg-pink-200",
+        "bg-yellow-100 hover:bg-yellow-200",
+        "bg-green-100 hover:bg-green-200",
+        "bg-purple-100 hover:bg-purple-200",
+        "bg-orange-100 hover:bg-orange-200",
+        "bg-teal-100 hover:bg-teal-200",
+        "bg-rose-100 hover:bg-rose-200"
+    ];
 
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 8 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${quizLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
+    // Генерація посилань з емодзі
+    let quizLinksHTML = QUIZ_LINKS_DATA.map((link, index) => {
+        const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length];
+        return `
+            <a id="link-quiz-${index}" 
+               href="${link.url}" 
+               target="_blank" 
+               title="${link.theme}"
+               class="circle-link ${color} hover:shadow-xl flex items-center justify-center w-20 h-20 rounded-full transition-transform duration-200 transform hover:scale-110">
+                <span class="text-4xl sm:text-5xl">${link.emoji}</span>
+            </a>
+        `;
+    }).join('');
+
+    // Основний контент секції
+    interactiveZoneContent = `
+        <h3 class="mt-10 text-2xl font-bold text-emerald-700 border-b pb-2">
+            ✅ Інтерактивна зона (Тести та Квести)
+        </h3>
+        <p class="mt-4 text-gray-600">
+            Оберіть тему, щоб перейти до тестів, вікторин чи інтерактивних завдань для перевірки своїх знань.
+        </p>
+
+        <!-- Круглі кнопки-посилання з емодзі (8 елементів) -->
+        <div class="mt-8 flex flex-wrap gap-5 justify-center">
+            ${quizLinksHTML}
+        </div>
+
+        <p class="mt-6 text-sm text-center text-gray-500 italic">
+            Натисніть на емоджі, щоб розпочати тест чи квест.
+        </p>
+    `;
             // -------------------------------------------------------------------------
             // 15. ПРОФЕСІЙНВ БЕЗПЕКА: наші сертифікати (certificates) - 3 КРУГИ (НОВЕ)
             // -------------------------------------------------------------------------
-            } else if (sectionId === 'certificates') {
-                 let certificateLinksHTML = CERTIFICATE_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index * 4 % INTERACTIVE_COLORS.length]; 
-                    return `
-                        <a id="link-cert-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
+} else if (sectionId === 'certificates') {
+    // Дані для посилань
+    const CERTIFICATE_LINKS_DATA = [
+        { emoji: "🎓", theme: "Сертифікат домедична допомога", url: "https://drive.google.com/drive/folders/1OdLsWn1jZRSPM_ItCTjnu-lrXITjDFu4" },
+        { emoji: "📜", theme: "Сертифікат не стій - вмикай: світло, тепло, інтернет", url: "https://drive.google.com/drive/folders/1AiRa8nCXtW7X2yCs0AJEHGsf_N6BAjH6" },
+        { emoji: "🏆", theme: "Сертифікат основи здорового харчувнн", url: "https://drive.google.com/drive/folders/1CMPOqwys_lilJkyd69RbYtrxymRMNtV4" }
+    ];
 
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-stone-700 border-b pb-2">🏅 Інтерактивна зона (Сертифікати)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Ознайомтеся з нашими сертифікатами та дипломами, що підтверджують професійну кваліфікацію викладачів, які працювали над цим проектом.
-                    </p>
+    // Кольори для кнопок (використовуються циклічно)
+    const INTERACTIVE_COLORS = [
+        "bg-blue-100 hover:bg-blue-200",
+        "bg-pink-100 hover:bg-pink-200",
+        "bg-yellow-100 hover:bg-yellow-200",
+        "bg-green-100 hover:bg-green-200",
+        "bg-purple-100 hover:bg-purple-200"
+    ];
 
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 3 елементи) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${certificateLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
+    // Генерація кнопок з емоджі
+    let certificateLinksHTML = CERTIFICATE_LINKS_DATA.map((link, index) => {
+        const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length];
+        return `
+            <a id="link-cert-${index}" 
+               href="${link.url}" 
+               target="_blank" 
+               title="${link.theme}"
+               class="circle-link ${color} hover:shadow-xl flex items-center justify-center w-20 h-20 rounded-full transition-transform duration-200 transform hover:scale-110">
+                <span class="text-4xl sm:text-5xl">${link.emoji}</span>
+            </a>
+        `;
+    }).join('');
+
+    // Основний контент секції
+    interactiveZoneContent = `
+        <h3 class="mt-10 text-2xl font-bold text-stone-700 border-b pb-2">
+            🏅 Інтерактивна зона (Сертифікати)
+        </h3>
+        <p class="mt-4 text-gray-600">
+            Ознайомтеся з нашими сертифікатами та дипломами, що підтверджують професійну кваліфікацію викладачів, які працювали над цим проєктом.
+        </p>
+
+        <!-- Круглі кнопки-посилання з емодзі -->
+        <div class="mt-8 flex flex-wrap gap-5 justify-center">
+            ${certificateLinksHTML}
+        </div>
+
+        <p class="mt-6 text-sm text-center text-gray-500 italic">
+            Натисніть на емоджі, щоб переглянути сертифікати.
+        </p>
+    `;
+
+
+
             // -------------------------------------------------------------------------
             // 16. БЕЗПЕЧНИЙ СТАРТ (safeStart) - БЕЗ AI-ПОМІЧНИКА
             // -------------------------------------------------------------------------
@@ -956,3 +1013,5 @@
     </footer>
 </body>
 </html>
+
+
