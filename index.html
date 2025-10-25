@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <!-- КРИТИЧНО: ЦЕЙ ТЕГ ПОВИНЕН БУТИ ПЕРШИМ У HEAD ДЛЯ ПРАВИЛЬНОГО ВІДОБРАЖЕННЯ КИРИЛИЦІ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Абетка Безпеки: Інтерактивний Нотатник</title>
+    <!-- Завантаження Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Налаштування шрифту Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Дуже світлий фон */
+            transition: background-color 0.5s;
+        }
+
+        /* Стилі для фігур (Карток) */
+        .shape-button {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            text-align: left;
+            padding: 1.5rem; /* p-6 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s;
+            cursor: pointer;
+            height: 100%; 
+        }
+        
+        .shape-button:hover {
+            /* При наведенні прибираємо поворот, щоб елемент виглядав стабільно */
+            transform: scale(1.05) rotate(0deg) translateY(-2px); 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
+        /* Анімація появи */
+        .card-enter {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        .card-enter-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+    
+        /* Стиль для основного контенту */
+        .content-wrapper {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Global State Management & Data -->
+    <script>
+        let currentPage = 'landing-page';
+        let currentSectionId = '';
+
+        // Повний список розділів
+        const SECTIONS = [
+            { id: 'safeStart', title: 'БЕЗПЕЧНИЙ СТАРТ', tag: '#SafeTogether', icon: '🚀', color: 'bg-green-500', content: { header: "Безпечний старт", body: "Правила безпечної взаємодії в колективі. Як розпізнати небезпечну ситуацію та не потрапити у пастку. Важливість спілкування з довіреними дорослими.", llmPrompt: "Розроби 5 ситуаційних питань для перевірки знань підлітка про безпечну поведінку в колективі." } },
+            { id: 'legalCompass', title: 'ЮРИДИЧНИЙ КОМПАС', tag: '#BeLawful', icon: '⚖️', color: 'bg-blue-500', content: { header: "Твої права та обов'язки", body: "Основи законодавства, що захищає дитину. Правила поведінки у публічних місцях, відповідальність за правопорушення, та до кого звертатися за юридичною допомогою.", llmPrompt: "Поясни, що таке адміністративна відповідальність для неповнолітніх та наведи 2 приклади." } },
+            { id: 'cyberSafe', title: 'КІБЕРБЕЗПЕКА', tag: '#SmartOnline', icon: '💻', color: 'bg-indigo-500', content: { header: "Захисти свій цифровий світ", body: "Правила створення надійних паролів, захист персональних даних в інтернеті. Як уникнути онлайн-шахрайства, фішингу та булінгу.", llmPrompt: "Створи інструкцію у форматі 5 кроків для створення 'незламного' пароля." } },
+            { id: 'chillSafe', title: 'БЕЗПЕЧНІ КАНІКУЛИ', tag: '#ChillSafe', icon: '☀️', color: 'bg-yellow-500', content: { header: "Канікули без ризиків", body: "Правила поведінки на воді, у лісі (гриби, ягоди). Безпечний туризм та відпочинок у горах. Перша допомога при укусах комах та змій.", llmPrompt: "Напиши коротку пам'ятку про те, як правильно поводитися у лісі, щоб не заблукати." } },
+            { id: 'fireCheck', title: 'ВОГОНЬ ПІД КОНТРОЛЕМ!', tag: '#FireCheck', icon: '🔥', color: 'bg-red-500', content: { header: "Основи пожежної безпеки", body: "Правила користування електроприладами. Дії під час загоряння: порядок евакуації та використання вогнегасника. Номер 101.", llmPrompt: "Опиши алгоритм дій, якщо загорівся електроприлад (наприклад, зарядний пристрій)." } },
+            { id: 'roadSmart', title: 'РУХАЙСЯ СВІДОМО! (ПДР)', tag: '#RoadSmart', icon: '🚦', color: 'bg-gray-500', content: { header: "Пішохід, велосипедист, пасажир", body: "Безпека на дорозі та пішохідних переходах. Правила перевезення у громадському транспорті. Використання світловідбиваючих елементів.", llmPrompt: "Сформулюй 3 головні правила для велосипедиста в місті." } },
+            { id: 'stayCalm', title: 'ЗНАННЯ, ЩО РЯТУЮТЬ ЖИТТЯ', tag: '#StayCalm', icon: '🧠', color: 'bg-purple-500', content: { header: "Алгоритми порятунку", body: "Дії під час повітряної тривоги, обстрілів, виявлення підозрілих предметів. Створення та використання тривожної валізи.", llmPrompt: "Які 5 найважливіших речей мають бути у 'тривожній валізі' для підлітка?" } },
+            { id: 'beReady', title: 'НАВИЧКИ, ЩО РЯТУЮТЬ ЖИТТЯ', tag: '#BeReady', icon: '🩹', color: 'bg-pink-500', content: { header: "Перша домедична допомога", body: "Як зупинити кровотечу, накласти пов'язку, що робити при втраті свідомості. Виклик швидкої допомоги (103).", llmPrompt: "Створи детальний покроковий опис, як накласти джгут (турнікет) на кінцівку." } },
+            { id: 'stopBullying', title: 'СТОП, БУЛІНГ!', tag: '#NoHate', icon: '🤝', color: 'bg-orange-500', content: { header: "Боротьба з булінгом", body: "Види булінгу та алгоритм дій для постраждалого, свідка та винного. Допомога психолога, гарячі лінії підтримки.", llmPrompt: "Що робити свідку булінгу? Напиши 3 конкретні поради." } },
+            { id: 'howAreYou', title: 'ТИ ЯК?', tag: '#MentalHealth', icon: '💚', color: 'bg-teal-500', content: { header: "Психологічна стійкість", body: "Турбота про ментальне здоров'я. Як боротися зі стресом, депресією. Методи релаксації та відновлення.", llmPrompt: "Наведи 4 прості техніки дихання для швидкого заспокоєння." } },
+            { id: 'healthyFood', title: 'ЗДОРОВЕ ХАРЧУВАННЯ', tag: '#EatSmart', icon: '🍎', color: 'bg-lime-500', content: { header: "5 кроків до здорового харчування", body: "Основні групи продуктів, вітаміни та їх роль. Небезпека фастфуду та енергетичних напоїв. Дієти та розлади харчування.", llmPrompt: "Поясни важливість білків, жирів та вуглеводів у раціоні підлітка." } },
+            { id: 'lifestyleTrend', title: 'ЗДОРОВИЙ СПОСІБ ЖИТТЯ', tag: '#BeFree', icon: '🤸', color: 'bg-cyan-500', content: { header: "Рух – це життя", body: "Шкода куріння, алкоголю та наркотиків. Вплив на організм та соціальні наслідки. Формування корисних звичок.", llmPrompt: "Який вплив мають енергетичні напої на серцево-судинну систему?" } },
+            { id: 'vaccineProtect', title: 'ВАКЦИНОВАНИЙ = ЗАХИЩЕНИЙ', tag: '#Immunity', icon: '💉', color: 'bg-sky-500', content: { header: "Вакцинація", body: "Роль вакцинації у захисті здоров'я. Календар щеплень, міфи та факти про вакцини. Колективний імунітет.", llmPrompt: "Спростуй 3 найпоширеніші міфи про вакцинацію, зрозумілою для підлітків мовою." } },
+            { id: 'dailyTraps', title: 'ПАСТКИ ПОВСЯКДЕННОГО ЖИТТЯ', tag: '#BeAware', icon: '⚠️', color: 'bg-amber-500', content: { header: "Небезпеки, що ховаються поруч", body: "Безпека вдома, спілкування з незнайомцями. Ризики роботи в інтернеті та 'легких' грошей. Сексуальна безпека.", llmPrompt: "Склади 5 правил, як безпечно поводитися з незнайомцями." } },
+            { id: 'quiz', title: 'ПЕРЕВІР СЕБЕ: тести, ігри, квести', tag: '#TestYourself', icon: '✅', color: 'bg-emerald-500', content: { header: "Твоя зона знань", body: "Динамічний розділ для самоперевірки. Тут ти знайдеш швидкі тести, інтерактивні вікторини та квести, щоб перевірити, наскільки добре ти засвоїв матеріал.", llmPrompt: "Створи невеликий тест з 3 питань про основи кібербезпеки." } },
+            { id: 'certificates', title: 'Професійна безпека: наші сертифікати', tag: '#Certificates', icon: '🏅', color: 'bg-stone-500', content: { header: "Наша кваліфікація", body: "Демонстрація сертифікатів. Цей розділ підтверджує, що інформація, надана в нотатнику, відповідає стандартам і розроблена професіоналами.", llmPrompt: "Напиши короткий текст (до 50 слів) для секції про професійну підготовку вчителів, які користуються цим нотатником." } }
+        ];
+
+        // Набір базових стилів для карток (контрольована різноманітність форм)
+        const SHAPE_STYLES = [
+            { shape: 'rounded-full', titleSize: 'text-xl', iconSize: 'text-5xl', align: 'items-center justify-center text-center' }, // Коло
+            { shape: 'rounded-3xl', titleSize: 'text-lg', iconSize: 'text-3xl', align: 'items-start justify-start text-left' }, // Квадрат
+            { shape: 'rounded-xl', titleSize: 'text-xl', iconSize: 'text-4xl', align: 'items-start justify-start text-left' }, // Закруглений прямокутник
+            { shape: 'rounded-lg', titleSize: 'text-lg', iconSize: 'text-3xl', align: 'items-start justify-start text-left' }, // Менш закруглений
+            { shape: 'rounded-[40px]', titleSize: 'text-lg', iconSize: 'text-4xl', align: 'items-start justify-start text-left' }, // Дуже закруглений
+        ];
+
+        // Кольори для циклічного вибору
+        const cardBackgrounds = ['bg-indigo-100', 'bg-red-100', 'bg-green-100', 'bg-yellow-100', 'bg-purple-100', 'bg-blue-100', 'bg-pink-100', 'bg-teal-100'];
+        const cardText = ['text-indigo-800', 'text-red-800', 'text-green-800', 'text-yellow-800', 'text-purple-800', 'text-blue-800', 'text-pink-800', 'text-teal-800'];
+        const cardBorders = ['border-indigo-500', 'border-red-500', 'border-green-500', 'border-yellow-500', 'border-purple-500', 'border-blue-500', 'border-pink-500', 'border-teal-500'];
+
+        /**
+         * Функція для генерації випадкового повороту (для хаосу)
+         * Використовує класи Tailwind для повороту.
+         */
+        function getRandomRotation() {
+            // rotate-[1deg], rotate-[-1deg], rotate-[2deg], rotate-[-2deg], rotate-0
+            const rotations = ['rotate-[1deg]', 'rotate-[-1deg]', 'rotate-[2deg]', 'rotate-[-2deg]', 'rotate-0'];
+            return rotations[Math.floor(Math.random() * rotations.length)];
+        }
+
+
+        /**
+         * Перемикання між Головною сторінкою та Сторінкою контенту.
+         */
+        function showPage(pageId, sectionId = null) {
+            currentPage = pageId;
+
+            // Ховаємо обидва контейнери
+            document.getElementById('landing-page').classList.add('hidden');
+            document.getElementById('content-page').classList.add('hidden');
+
+            if (pageId === 'landing-page') {
+                document.getElementById('landing-page').classList.remove('hidden');
+                document.body.style.backgroundColor = '#f8fafc'; // Світлий фон
+            } else {
+                document.getElementById('content-page').classList.remove('hidden');
+                document.body.style.backgroundColor = '#e2e8f0'; // Трохи темніший фон для контрасту з контентом
+                if (sectionId) {
+                    showSection(sectionId);
+                    // Прокручуємо на початок сторінки з контентом
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        }
+
+        /**
+         * Відображення вибраного розділу на повній сторінці.
+         */
+        function showSection(sectionId) {
+            currentSectionId = sectionId;
+            const currentSection = SECTIONS.find(s => s.id === sectionId);
+
+            if (!currentSection) return;
+
+            const contentDiv = document.getElementById('content-details');
+            
+            contentDiv.innerHTML = `
+                <div class="p-6 md:p-10">
+                    <!-- Заголовок та кнопка "Назад" -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b pb-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-5xl">${currentSection.icon}</span>
+                            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900">${currentSection.content.header}</h1>
+                        </div>
+                        <button onclick="showPage('landing-page')" class="mt-4 sm:mt-0 px-4 py-2 bg-indigo-500 text-white font-semibold rounded-full hover:bg-indigo-600 transition duration-300 shadow-md flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                            До Головного Меню
+                        </button>
+                    </div>
+                    
+                    <p class="text-xl text-gray-500 mb-8 font-medium">${currentSection.tag}</p>
+                    
+                    <!-- Основний текст розділу -->
+                    <div class="prose max-w-none text-gray-700 leading-relaxed text-lg">
+                        <p class="border-l-4 border-red-500 pl-4 py-3 bg-red-50 rounded-r-lg shadow-sm">${currentSection.content.body}</p>
+
+                        <h3 class="mt-10 text-2xl font-bold text-indigo-700 border-b pb-2">🧠 Інтерактивна зона (AI-помічник)</h3>
+                        <p class="mt-4 text-gray-600">
+                            Використовуй інтелектуального помічника для поглиблення знань з теми 
+                            **"${currentSection.title}"**.
+                        </p>
+                        
+                        <!-- Форма для AI запиту -->
+                        <div class="mt-6 p-5 bg-gray-50 border border-gray-200 rounded-xl shadow-inner">
+                            <label for="ai-prompt" class="block text-sm font-semibold text-gray-700 mb-2">Твій запит до AI-помічника:</label>
+                            <textarea id="ai-prompt" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Наприклад: 'Створи невеликий тест з 3 питань про основи кібербезпеки.'">${currentSection.content.llmPrompt}</textarea>
+                            <button class="mt-4 px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition duration-300 shadow-lg transform hover:scale-[1.02]">
+                                Надіслати запит
+                            </button>
+                        </div>
+
+                        <div id="ai-response" class="mt-8 p-5 bg-green-50 border-l-4 border-green-500 text-green-800 rounded-r-xl hidden">
+                            <h4 class="font-bold mb-2 flex items-center text-xl">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-green-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                Відповідь AI
+                            </h4>
+                            <p>Тут з'явиться відповідь на ваш запит.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Ініціалізація сторінок при завантаженні
+         */
+        window.onload = function () {
+            // Показуємо головну сторінку при старті
+            showPage('landing-page');
+
+            // Анімація карток на головній сторінці
+            setTimeout(() => {
+                document.querySelectorAll('.shape-button').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('card-enter-active');
+                    }, index * 60); // Затримка 60мс на кожну фігуру
+                });
+            }, 300);
+        };
+    </script>
+
+    <!-- 1. ГОЛОВНА СТОРІНКА (LANDING PAGE - Хаотична Сітка) -->
+    <div id="landing-page" class="max-w-7xl mx-auto">
+        <header class="text-center py-10 md:py-16">
+            <h1 class="text-5xl font-extrabold text-gray-800 mb-3 tracking-tight">
+                АБЕТКА БЕЗПЕКИ <span class="text-red-600">2.0</span>
+            </h1>
+            <p class="text-xl text-gray-500 font-light max-w-2xl mx-auto">
+                Твій інтерактивний дашборд життєвих навичок. Обери свій модуль.
+            </p>
+            <button onclick="showPage('content-page', SECTIONS[0].id)" class="mt-8 px-10 py-3 bg-indigo-600 text-white font-bold text-xl rounded-full hover:bg-indigo-700 transition duration-300 shadow-xl transform hover:scale-105">
+                Розпочати навчання 🚀
+            </button>
+        </header>
+
+        <!-- Галерея Фігур (Хаотична Сітка) -->
+        <div class="px-4 sm:px-6 lg:px-8 py-10">
+            <h2 class="text-3xl font-bold text-gray-700 mb-10 border-b-2 border-red-200 pb-2 text-center">
+                Модулі безпеки
+            </h2>
+            
+            <!-- Сітка однакового розміру: 4 колонки на десктопі, 2 на мобільному -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Генерація фігур -->
+                <script>
+                    SECTIONS.forEach((section, index) => {
+                        // 1. Вибираємо циклічний стиль фігури
+                        const style = SHAPE_STYLES[index % SHAPE_STYLES.length];
+                        
+                        // 2. Вибираємо колір
+                        const colorIndex = index % cardBackgrounds.length;
+                        
+                        // 3. Генеруємо випадковий поворот
+                        const rotationClass = getRandomRotation();
+
+                        document.write(`
+                            <button onclick="showPage('content-page', '${section.id}')"
+                                class="shape-button card-enter col-span-1 
+                                ${rotationClass} 
+                                ${style.shape} 
+                                ${cardBackgrounds[colorIndex]} 
+                                ${cardText[colorIndex]} 
+                                border-b-4 
+                                ${cardBorders[colorIndex]} 
+                                ${style.align}">
+                                
+                                <span class="${style.iconSize} block mb-1">${section.icon}</span>
+                                <h3 class="${style.titleSize} font-extrabold leading-snug">${section.title}</h3>
+                                <p class="text-xs font-medium opacity-80 mt-1 text-gray-600">${section.tag}</p>
+                            </button>
+                        `);
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. СТОРІНКА КОНТЕНТУ -->
+    <div id="content-page" class="hidden">
+        <div class="max-w-4xl mx-auto mt-6 content-wrapper">
+            <div id="content-details">
+                <!-- Section content will be rendered here by showSection() -->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
