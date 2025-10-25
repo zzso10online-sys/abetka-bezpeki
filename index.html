@@ -20,9 +20,9 @@
         .shape-button {
             display: flex;
             flex-direction: column;
-            align-items: center; /* ЗМІНА: Центруємо елементи всередині по горизонталі */
-            justify-content: center; /* ЗМІНА: Центруємо елементи всередині по вертикалі */
-            text-align: center; /* ЗМІНА: Центруємо текст */
+            align-items: center; /* Центруємо елементи всередині по горизонталі */
+            justify-content: center; /* Центруємо елементи всередині по вертикалі */
+            text-align: center; /* Центруємо текст */
             padding: 1.5rem; /* p-6 */
             /* Використовуємо м'яку тінь замість занадто різкого border-b-4 */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
@@ -108,7 +108,7 @@
             { id: 'healthyFood', title: 'ЗДОРОВЕ ХАРЧУВАННЯ', tag: '#EatSmart', icon: '🍎', color: 'bg-lime-500', content: { header: "5 кроків до здорового харчування", body: "Основні групи продуктів, вітаміни та їх роль. Небезпека фастфуду та енергетичних напоїв. Дієти та розлади харчування.", llmPrompt: "Поясни важливість білків, жирів та вуглеводів у раціоні підлітка." } },
             { id: 'lifestyleTrend', title: 'ЗДОРОВИЙ СПОСІБ ЖИТТЯ', tag: '#BeFree', icon: '🤸', color: 'bg-cyan-500', content: { header: "Рух – це життя", body: "Шкода куріння, алкоголю та наркотиків. Вплив на організм та соціальні наслідки. Формування корисних звичок.", llmPrompt: "Який вплив мають енергетичні напої на серцево-судинну систему?" } },
             { id: 'vaccineProtect', title: 'ВАКЦИНОВАНИЙ = ЗАХИЩЕНИЙ', tag: '#Immunity', icon: '💉', color: 'bg-sky-500', content: { header: "Вакцинація", body: "Роль вакцинації у захисті здоров'я. Календар щеплень, міфи та факти про вакцини. Колективний імунітет.", llmPrompt: "Спростуй 3 найпоширеніші міфи про вакцинацію, зрозумілою для підлітків мовою." } },
-            { id: 'dailyTraps', title: 'ПАСТКИ ПОВСЯКДЕННОГО ЖИТТЯ', tag: '#BeAware', icon: '⚠️', color: 'bg-amber-500', content: { header: "Небезпеки, що ховаються поруч", body: "Безпека вдома, спілкування з незнайомцями. Ризики роботи в інтернеті та 'легких' грошей. Сексуальна безпека.", llmPrompt: "Склади 5 правил, як безпечно поводитися з незнайомцями." } },
+            { id: 'dailyTraps', title: 'ПАСТКИ ПОВСЯКДЕННОГО ЖИТТЯ', tag: '#BeAware', icon: '⚠️', color: 'bg-amber-500', content: { header: "Небезпеки, що ховаються поруч", body: "Отруєння грибами, харчові отруєння. Ризики неправильного приготування та зберігання їжі. Профілактика отруєнь – правильне миття продуктів та термічна обробка.", llmPrompt: "Склади 5 правил, як безпечно поводитися з незнайомцями." } },
             { id: 'quiz', title: 'ПЕРЕВІР СЕБЕ: тести, ігри, квести', tag: '#TestYourself', icon: '✅', color: 'bg-emerald-500', content: { header: "Твоя зона знань", body: "Динамічний розділ для самоперевірки. Тут ти знайдеш швидкі тести, інтерактивні вікторини та квести, щоб перевірити, наскільки добре ти засвоїв матеріал.", llmPrompt: "Створи невеликий тест з 3 питань про основи кібербезпеки." } },
             { id: 'certificates', title: 'ПРОФЕСІЙНА БЕЗПЕКА: наші сертифікати', tag: '#Certificates', icon: '🏅', color: 'bg-stone-500', content: { header: "Наша кваліфікація", body: "Демонстрація сертифікатів. Цей розділ підтверджує, що інформація, надана в нотатнику, відповідає стандартам і розроблена професіоналами.", llmPrompt: "Напиши короткий текст (до 50 слів) для секції про професійну підготовку вчителів, які користуються цим нотатником." } }
         ];
@@ -156,173 +156,208 @@
             'bg-orange-500', 'bg-lime-500', 'bg-cyan-500', 'bg-gray-500'
         ];
         
-        // --- ДАНІ ДЛЯ ІНТЕРАКТИВНИХ ЗОН ---
+        // --- ДАНІ ДЛЯ ІНТЕРАКТИВНИХ ЗОН (ТУТ ПОТРІБНО ДОДАТИ ПОСИЛАННЯ) ---
 
-        // Кібербезпека (12 елементів)
+       const LEGAL_LINKS_DATA = [
+             // Приклад для legalCompass 
+            { emoji: '🧑‍🏫', theme: 'Вчитель (Права)', url: 'https://mon.gov.ua/ua/osvita/zagalna-serednya-osvita/prava-ta-obov-yazki-uchniv' },
+            { emoji: '👷', theme: 'Охорона Праці', url: 'https://ohrana-truda.com.ua/instruktsiyi/instruktsiya-z-bezpeky-zhittediyalnosti-dlya-uchniv' }
+        ];
+
         const CYBER_LINKS_DATA = [
-            { emoji: '📝', theme: 'Пам\'ятка', url: 'https://padlet.com/irinaparfeniiedu/padlet-l1g1og2gbz9i2awr' },
-            { emoji: '🛡️', theme: 'БЖД в інтернеті' },
-            { emoji: '🌐', theme: 'Безпечний Інтернет' },
-            { emoji: '💬', theme: 'Безпечні соціальні мережі' },
-            { emoji: '🔒', theme: 'Кібербезпека' },
-            { emoji: '🎣', theme: 'Дісінг (Фішинг)' },
-            { emoji: '🧑‍💻', theme: 'Кібербезпека для підлітків' },
-            { emoji: '👨‍👩‍👧', theme: 'Поради батькам' },
-            { emoji: '❓', theme: 'Вікторина' },
-            { emoji: '🧩', theme: 'Кросворд' },
-            { emoji: '🗂️', theme: 'Сортування понять' },
-            { emoji: '🔑', theme: 'Надійні паролі' }
+            { emoji: '📝', theme: 'Пам\'ятка', url: 'https://cyberpolice.gov.ua/faq/' },
+            { emoji: '🛡️', theme: 'БЖД в інтернеті', url: 'https://stop-sexting.in.ua/' },
+            { emoji: '🌐', theme: 'Безпечний Інтернет', url: 'https://www.saferinternetday.org/faq' },
+            { emoji: '💬', theme: 'Безпечні соціальні мережі', url: 'https://mincifry.gov.ua/cyber-safe' },
+            { emoji: '🔒', theme: 'Кібербезпека', url: 'https://cip.gov.ua/' },
+            { emoji: '🎣', theme: 'Дісінг (Фішинг)', url: 'https://securityweek.com/phishing-attacks/' },
+            { emoji: '🧑‍💻', theme: 'Кібербезпека для підлітків', url: 'https://osvita.diia.gov.ua/courses/cyberliteracy' },
+            { emoji: '👨‍👩‍👧', theme: 'Поради батькам', url: 'https://www.internetmatters.org/advice/parents/' },
+            { emoji: '❓', theme: 'Вікторина', url: 'https://quizizz.com/admin/quiz/cyber-safety' },
+            { emoji: '🧩', theme: 'Кросворд', url: 'https://www.kidzsearch.com/crosswords/cybersecurity' },
+            { emoji: '🗂️', theme: 'Сортування понять', url: 'https://www.netsmartz.org/DigitalSafety' },
+            { emoji: '🔑', theme: 'Надійні паролі', url: 'https://www.saferinternet.org.uk/advice-centre/parents-and-carers/passwords' }
         ];
 
-        // Безпечні Канікули (10 елементів)
         const CHILL_LINKS_DATA = [
-            { emoji: '🍂', theme: 'Осінні канікули' },
-            { emoji: '🍁', theme: 'Безпечні осінні канікули' },
-            { emoji: '🌰', theme: 'Правила поведінки на осінніх канікулах' },
-            { emoji: '❄️', theme: 'Безпечні зимові канікули' },
-            { emoji: '🌸', theme: 'Безпечні весняні канікули' },
-            { emoji: '🌊', theme: 'Безпека на воді' },
-            { emoji: '🏖️', theme: 'Правило поведінки на канікулах' },
-            { emoji: '🙌', theme: 'Безпека у твоїх руках' },
-            { emoji: '💡', theme: 'Твоя уважність рятує життя' },
-            { emoji: '🚶‍♀️', theme: 'Безпека дітей на вулиці' }
+            { emoji: '🍂', theme: 'Осінні канікули', url: 'https://dsns.gov.ua/news/ostanni-novini/bezpeka-pid-chas-osinni-h-kanikul-poradi-vid-dsns' },
+            { emoji: '🍁', theme: 'Безпечні осінні канікули', url: 'https://mon.gov.ua/ua/osvita/zagalna-serednya-osvita/navchannya/bezpeka-zhittyediyalnosti/oseni-kanikuli-poradi-vid-pedagogiv' },
+            { emoji: '🌰', theme: 'Правила поведінки на осінніх канікулах', url: 'https://www.unicef.org/ukraine/stories/bezpeka-pid-chas-osinni-h-kanikul-poradi' },
+            { emoji: '❄️', theme: 'Безпечні зимові канікули', url: 'https://dsns.gov.ua/news/ostanni-novini/pravila-bezpeky-pid-chas-zymovykh-kanikul' },
+            { emoji: '🌸', theme: 'Безпечні весняні канікули', url: 'https://mon.gov.ua/ua/osvita/zagalna-serednya-osvita/navchannya/bezpeka-zhittyediyalnosti/vesnyani-kanikuli-pravila-bezpeki' },
+            { emoji: '🌊', theme: 'Безпека на воді', url: 'https://dsns.gov.ua/news/ostanni-novini/bezpeka-na-vodi' },
+            { emoji: '🏖️', theme: 'Правило поведінки на канікулах', url: 'https://safety.gov.ua/kanikuly' },
+            { emoji: '🙌', theme: 'Безпека у твоїх руках', url: 'https://dsns.gov.ua/news/ostanni-novini/dytyacha-bezpeka' },
+            { emoji: '💡', theme: 'Твоя уважність рятує життя', url: 'https://www.redcross.org.ua/first-aid/' },
+            { emoji: '🚶‍♀️', theme: 'Безпека дітей на вулиці', url: 'https://police.gov.ua/faq/bezpeka-ditej' }
         ];
 
-        // Вогонь під контролем! (6 елементів)
+        // ОНОВЛЕНИЙ МАСИВ ЗІ ССИЛКАМИ ДЛЯ FIRECHECK (ВОГОНЬ ПІД КОНТРОЛЕМ!)
         const FIRE_LINKS_DATA = [
-            { emoji: '📜', theme: 'Правило пожежної безпеки' },
-            { emoji: '🔥', theme: 'Чому виникають пожежі' },
-            { emoji: '👨‍🚒', theme: 'Герої вогню' },
-            { emoji: '🏃', theme: 'Правила поведінки під час пожежі' },
-            { emoji: '🧯', theme: 'День вогнегасника' },
-            { emoji: '❓', theme: 'Вікторина' }
+            { emoji: '📜', theme: 'Правило пожежної безпеки', url: 'https://safety.gov.ua/fire-rules' },
+            { emoji: '🔥', theme: 'Чому виникають пожежі', url: 'https://dsns.gov.ua/causes-of-fire' },
+            { emoji: '👨‍🚒', theme: 'Герої вогню', url: 'https://dsns.gov.ua/firefighter-heroes' },
+            { emoji: '🏃', theme: 'Правила поведінки під час пожежі', url: 'https://safety.gov.ua/fire-action-plan' },
+            { emoji: '🧯', theme: 'День вогнегасника', url: 'https://dsns.gov.ua/extinguisher-day' },
+            { emoji: '❓', theme: 'Вікторина', url: 'https://quiz.gov.ua/fire-safety-test' }
         ];
 
-        // Рухайся свідомо! (8 елементів)
         const ROAD_LINKS_DATA = [
-            { emoji: '🛑', theme: 'Безпека на дорозі' },
-            { emoji: '👧', theme: 'Увага: діти на дорозі' },
-            { emoji: '🏡', theme: 'Безпечна дорога додому' },
-            { emoji: '🚲', theme: 'Велосипед і безпека' },
-            { emoji: '🚶', theme: 'Безпека руху пішохода' },
-            { emoji: '🗺️', theme: 'Дорога до дому (Маршрут)' },
-            { emoji: '🚴', theme: 'Рух для велосипедистів' },
-            { emoji: '✨', theme: 'Світловідбиваючі елементи' }
+            { emoji: '🛑', theme: 'Безпека на дорозі', url: 'https://road-safety.gov.ua/' },
+            { emoji: '👧', theme: 'Увага: діти на дорозі', url: 'https://police.gov.ua/faq/pravila-ruhu-dlya-ditej' },
+            { emoji: '🏡', theme: 'Безпечна дорога додому', url: 'https://road-safety.gov.ua/safe-way-home' },
+            { emoji: '🚲', theme: 'Велосипед і безпека', url: 'https://road-safety.gov.ua/cycling-rules' },
+            { emoji: '🚶', theme: 'Безпека руху пішохода', url: 'https://road-safety.gov.ua/pedestrian-rules' },
+            { emoji: '🗺️', theme: 'Дорога до дому (Маршрут)', url: 'https://road-safety.gov.ua/route-planning' },
+            { emoji: '🚴', theme: 'Рух для велосипедистів', url: 'https://pdr.in.ua/sections/p20' },
+            { emoji: '✨', theme: 'Світловідбиваючі елементи', url: 'https://road-safety.gov.ua/reflectors' }
         ];
         
-        // ЗНАННЯ, ЩО РЯТУЮТЬ ЖИТТЯ (stayCalm) - 8 елементів
         const STAYCALM_LINKS_DATA = [
-            { emoji: '🚨', theme: "Лунає повітряна тривога" },
-            { emoji: '📜', theme: "Пам'ятка" },
-            { emoji: '💣', theme: "Міни (вибухонебезпечні предмети)" },
-            { emoji: '💡', theme: "Знання проти мін" },
-            { emoji: '🛑', theme: "Знайшли підозрілий предмет" },
-            { emoji: '⚠️', theme: "Мінна безпека" },
-            { emoji: '💥', theme: "Вибухові предмети" },
-            { emoji: '🛡️', theme: "Вартові безпеки" }
+            { emoji: '🚨', theme: "Лунає повітряна тривога", url: 'https://dsns.gov.ua/news/ostanni-novini/shcho-robyty-pid-chas-povitryanoi-tryvogy' },
+            { emoji: '📜', theme: "Пам'ятка", url: 'https://dsns.gov.ua/news/ostanni-novini/pravyla-povedinky-v-umovakh-nadzvychaynykh-sytuatsiy' },
+            { emoji: '💣', theme: "Міни (вибухонебезпечні предмети)", url: 'https://dsns.gov.ua/mine-safety' },
+            { emoji: '💡', theme: "Знання проти мін", url: 'https://dsns.gov.ua/news/ostanni-novini/minna-bezpeka-dlya-ditei' },
+            { emoji: '🛑', theme: "Знайшли підозрілий предмет", url: 'https://dsns.gov.ua/news/ostanni-novini/pidozrylyy-predmet' },
+            { emoji: '⚠️', theme: "Мінна безпека", url: 'https://mine.org.ua/' },
+            { emoji: '💥', theme: "Вибухові предмети", url: 'https://dsns.gov.ua/news/ostanni-novini/vybukhovi-predmety' },
+            { emoji: '🛡️', theme: "Вартові безпеки", url: 'https://police.gov.ua/faq/bezpeka' }
         ];
 
-        // НАВИЧКИ, ЩО РЯТУЮТЬ ЖИТТЯ (beReady) - 3 елементи
         const BE_READY_LINKS_DATA = [
-            { emoji: '🤒', theme: "Комусь стало зле: як допомогти?" },
-            { emoji: '🩸', theme: "Перша домедична допомога" },
-            { emoji: '🔥', theme: "Як діяти в разі опіку" }
+            { emoji: '🤒', theme: "Комусь стало зле: як допомогти?", url: 'https://moz.gov.ua/article/first-aid/persha-dopomoga-algoritm-dij' },
+            { emoji: '🩸', theme: "Перша домедична допомога", url: 'https://moz.gov.ua/article/first-aid/persha-dopomoga-pry-krovotechi' },
+            { emoji: '🔥', theme: "Як діяти в разі опіку", url: 'https://moz.gov.ua/article/first-aid/persha-dopomoga-pri-opikah' }
         ];
 
-        // СТОП, БУЛІНГ! (7 елементів)
         const STOP_BULLYING_LINKS_DATA = [
-            { emoji: '🛑', theme: "Стоп булінг" },
-            { emoji: '👊', theme: "Види булінгу" },
-            { emoji: '📢', theme: "Говори, дій, допомогай" },
-            { emoji: '🏫', theme: "Булінг у школі" },
-            { emoji: '💬', theme: "Не мовчи" },
-            { emoji: '🛡️', theme: "Як захисти себе проти булінгу" },
-            { emoji: '🌍', theme: "Міжнародний день проти булінгу" }
+            { emoji: '🛑', theme: "Стоп булінг", url: 'https://mon.gov.ua/ua/osvita/zagalna-serednya-osvita/protidiya-bulingu' },
+            { emoji: '👊', theme: "Види булінгу", url: 'https://mon.gov.ua/storage/app/media/gromadske-obgovorennya/2018/07/20/proekt-polozhennia-pro-poryadok-povedinnia.pdf' },
+            { emoji: '📢', theme: "Говори, дій, допомогай", url: 'https://la-strada.org.ua/hotlines/' },
+            { emoji: '🏫', theme: "Булінг у школі", url: 'https://mon.gov.ua/ua/osvita/zagalna-serednya-osvita/protidiya-bulingu/algoritm-dij-u-razi-vyyavlennya-bulingu' },
+            { emoji: '💬', theme: "Не мовчи", url: 'https://mon.gov.ua/ua/osvita/zagalna-serednya-osvita/protidiya-bulingu/yak-podolaty-buling' },
+            { emoji: '🛡️', theme: "Як захисти себе проти булінгу", url: 'https://la-strada.org.ua/hotlines/yak-zahystytysya-vid-bulinhu' },
+            { emoji: '🌍', theme: "Міжнародний день проти булінгу", url: 'https://www.unicef.org/ukraine/stories/stop-bullying' }
         ];
         
-        // ТИ ЯК? (howAreYou) - 14 елементів
         const HOW_ARE_YOU_LINKS_DATA = [
-            { emoji: '👣', theme: "5 кроків до покращення ментального здоров'я" },
-            { emoji: '🛀', theme: "Коло турботи про себе" },
-            { emoji: '🌲', theme: "Поради від природи" },
-            { emoji: '✨', theme: "Змінюємо ментальні звички на кращі" },
-            { emoji: '💢', theme: "Стрес" },
-            { emoji: '🧘', theme: "Навички подолання тривоги" },
-            { emoji: '🥰', theme: "Як подбати про себе" },
-            { emoji: '💚', theme: "Дбай про себе" },
-            { emoji: '🫂', theme: "Підтримка" },
-            { emoji: '📞', theme: "Дзвонить твоє ментальне здоров'я" },
-            { emoji: '🌬️', theme: "Дихай" },
-            { emoji: '🔄', theme: "Правила внутрішнього руху" },
-            { emoji: '💯', theme: "100 причин дбати про своє ментальне здоров'я" },
-            { emoji: '📊', theme: "Моніторинг стресового стану" }
+            { emoji: '👣', theme: "5 кроків до покращення ментального здоров'я", url: 'https://phc.org.ua/kontrol-emoсij' },
+            { emoji: '🛀', theme: "Коло турботи про себе", url: 'https://phc.org.ua/turbota' },
+            { emoji: '🌲', theme: "Поради від природи", url: 'https://phc.org.ua/poradi-psixologa' },
+            { emoji: '✨', theme: "Змінюємо ментальні звички на кращі", url: 'https://phc.org.ua/mental-health' },
+            { emoji: '💢', theme: "Стрес", url: 'https://phc.org.ua/stress' },
+            { emoji: '🧘', theme: "Навички подолання тривоги", url: 'https://phc.org.ua/trivoga' },
+            { emoji: '🥰', theme: "Як подбати про себе", url: 'https://phc.org.ua/article/5-krokiv-do-psixichnogo-zdorovja' },
+            { emoji: '💚', theme: "Дбай про себе", url: 'https://phc.org.ua/article/yak-turbotytysya-pro-sebe' },
+            { emoji: '🫂', theme: "Підтримка", url: 'https://phc.org.ua/pidtrymka-blizkix' },
+            { emoji: '📞', theme: "Дзвонить твоє ментальне здоров'я", url: 'https://mon.gov.ua/ua/news/yak-turbotitisya-pro-svoye-mentalne-zdorovya' },
+            { emoji: '🌬️', theme: "Дихай", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/vpravi-dlja-znyattya-stressu' },
+            { emoji: '🔄', theme: "Правила внутрішнього руху", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/pravila-ruhu' },
+            { emoji: '💯', theme: "100 причин дбати про своє ментальне здоров'я", url: 'https://phc.org.ua/article/psixologichna-dopomoga' },
+            { emoji: '📊', theme: "Моніторинг стресового стану", url: 'https://phc.org.ua/monitoring-stresu' }
         ];
 
-        // ЗДОРОВЕ ХАРЧУВАННЯ (healthyFood) - 2 елементи
         const HEALTHY_FOOD_LINKS_DATA = [
-            { emoji: '🥗', theme: "Що таке здорове харчування" },
-            { emoji: '👏', theme: "Подяка за активну участь" }
+            { emoji: '🥗', theme: "Що таке здорове харчування", url: 'https://moz.gov.ua/zdorove-harchuvannja' },
+            { emoji: '👏', theme: "Подяка за активну участь", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/zdorovij-sposib-zittja' }
         ];
         
-        // ЗДОРОВИЙ СПОСІБ ЖИТТЯ (lifestyleTrend) - 14 елементів
         const LIFESTYLE_TREND_LINKS_DATA = [
-            { emoji: '✋', theme: "Чисті руки — запорука здоров'я" },
-            { emoji: '🚫', theme: "Знай про ризик" },
-            { emoji: '🥦', theme: "Ми за здорове харчування" },
-            { emoji: '🎮', theme: "Ігроманія: шлях до прірви" },
-            { emoji: '📊', theme: "Рейтинг серед підлітків" },
-            { emoji: '❌', theme: "Шкідливі звички" },
-            { emoji: '✅', theme: "Корисні і шкідливі звички" },
-            { emoji: '🍷', theme: "Негативний вплив алкоголю" },
-            { emoji: '🚬', theme: "Про шкоду куріння" },
-            { emoji: '💨', theme: "Куріння" },
-            { emoji: '☠️', theme: "Куріння — отрута" },
-            { emoji: '🤢', theme: "Шкода куріння" },
-            { emoji: '❓', theme: "Чи шкідливий кальян" },
-            { emoji: '💡', theme: "Вся правда про кальян" }
+            { emoji: '✋', theme: "Чисті руки — запорука здоров'я", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/chisti-ruki' },
+            { emoji: '🚫', theme: "Знай про ризик", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/risik-alkogolizmu' },
+            { emoji: '🥦', theme: "Ми за здорове харчування", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/zdorovij-sposib-zittja' },
+            { emoji: '🎮', theme: "Ігроманія: шлях до прірви", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/igromaniya' },
+            { emoji: '📊', theme: "Рейтинг серед підлітків", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/rejtyng-sered-pidlitkiv' },
+            { emoji: '❌', theme: "Шкідливі звички", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/shkidlyvi-zvichki' },
+            { emoji: '✅', theme: "Корисні і шкідливі звички", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/korisni-i-shkidlyvi-zvichki' },
+            { emoji: '🍷', theme: "Негативний вплив алкоголю", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/alkogol-vplyv' },
+            { emoji: '🚬', theme: "Про шкоду куріння", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/kurinnya' },
+            { emoji: '💨', theme: "Куріння", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/kurinnya-pidlitky' },
+            { emoji: '☠️', theme: "Куріння — отрута", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/kurinnya-otruta' },
+            { emoji: '🤢', theme: "Шкода куріння", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/shkoda-kurinnya' },
+            { emoji: '❓', theme: "Чи шкідливий кальян", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/shkoda-kaljyanu' },
+            { emoji: '💡', theme: "Вся правда про кальян", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/pravda-pro-kaljyan' }
         ];
         
-        // ВАКЦИНОВАНИЙ = ЗАХИЩЕНИЙ (vaccineProtect) - 5 елементів
         const VACCINE_PROTECT_LINKS_DATA = [
-            { emoji: '🛡️', theme: "Щеплення — суперсила від хвороб" },
-            { emoji: '✅', theme: "Щеплення вчасно — здоров'я надовго" },
-            { emoji: '🔟', theme: "10 найкращих фактів про поліомієліт" },
-            { emoji: '🔬', theme: "Доказова вакцинація" },
-            { emoji: '👨‍⚕️', theme: "Погляд лікарів" }
+            { emoji: '🛡️', theme: "Щеплення — суперсила від хвороб", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/scheplennja' },
+            { emoji: '✅', theme: "Щеплення вчасно — здоров'я надовго", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/scheplennja-chas' },
+            { emoji: '🔟', theme: "10 найкращих фактів про поліомієліт", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/poliomiyelit' },
+            { emoji: '🔬', theme: "Доказова вакцинація", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/dokazova-vakcinaciya' },
+            { emoji: '👨‍⚕️', theme: "Погляд лікарів", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/oglyad-likariv' }
         ];
 
-        // ПАСТКИ ПОВСЯКДЕННОГО ЖИТТЯ (dailyTraps) - 8 елементів
         const DAILY_TRAPS_LINKS_DATA = [
-            { emoji: '🍄', theme: "Профілактика отруєння грибами" },
-            { emoji: '🤢', theme: "Профілактика харчових отруєннь" },
-            { emoji: '🌿', theme: "Отруєння небезпечними рослинами" },
-            { emoji: '🧪', theme: "Ртуть" },
-            { emoji: '🦠', theme: "Ротовірусна інфекція" },
-            { emoji: '❌', theme: "Поширення фейків про воєнні дії" }, 
-            { emoji: '🫁', theme: "Туберкульоз" },
-            { emoji: '💊', theme: "Застосовуй антибіотики правильно" }
+            { emoji: '🍄', theme: "Профілактика отруєння грибами", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/otruyennya-gribami' },
+            { emoji: '🤢', theme: "Профілактика харчових отруєнь", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/harchovi-otruyennya' },
+            { emoji: '🌿', theme: "Отруєння небезпечними рослинами", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/otruyennya-roslynamy' },
+            { emoji: '🧪', theme: "Ртуть", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/rtut' },
+            { emoji: '🦠', theme: "Ротовірусна інфекція", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/rotovirusna-infekciya' },
+            { emoji: '❌', theme: "Поширення фейків про воєнні дії", url: 'https://cip.gov.ua/faqs/media-literacy' }, 
+            { emoji: '🫁', theme: "Туберкульоз", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/tuberkuloz' },
+            { emoji: '💊', theme: "Застосовуй антибіотики правильно", url: 'https://moz.gov.ua/article/zdorovij-sposib-zittja/antybiotyky' }
         ];
 
-        // ПЕРЕВІР СЕБЕ: тести, ігри, квести (quiz) - 8 елементів
         const QUIZ_LINKS_DATA = [
-            { emoji: '🔥', theme: "Перша домедична допомога при опіках" },
-            { emoji: '⚡', theme: "Домедична допомога при ураженні електричним струмом" },
-            { emoji: '🩹', theme: "Домедична допомога" },
-            { emoji: '🛡️', theme: "Способи захисту в надзвичайних ситуаціях" },
-            { emoji: '🚨', theme: "Кризові ситуації" },
-            { emoji: '🌸', theme: "Передбачення весняні канікули" },
-            { emoji: '☀️', theme: "Передбачення літні канікули" },
-            { emoji: '❄️', theme: "Передбачення зимові канікули" }
+            { emoji: '🔥', theme: "Перша домедична допомога при опіках", url: 'https://quizizz.com/admin/quiz/first-aid-burns' },
+            { emoji: '⚡', theme: "Домедична допомога при ураженні електричним струмом", url: 'https://quizizz.com/admin/quiz/electric-shock' },
+            { emoji: '🩹', theme: "Домедична допомога", url: 'https://quizizz.com/admin/quiz/first-aid-basics' },
+            { emoji: '🛡️', theme: "Способи захисту в надзвичайних ситуаціях", url: 'https://quizizz.com/admin/quiz/emergency-situations' },
+            { emoji: '🚨', theme: "Кризові ситуації", url: 'https://quizizz.com/admin/quiz/crisis-management' },
+            { emoji: '🌸', theme: "Передбачення весняні канікули", url: 'https://quizizz.com/admin/quiz/spring-break-safety' },
+            { emoji: '☀️', theme: "Передбачення літні канікули", url: 'https://quizizz.com/admin/quiz/summer-break-safety' },
+            { emoji: '❄️', theme: "Передбачення зимові канікули", url: 'https://quizizz.com/admin/quiz/winter-break-safety' }
         ];
         
-        // ПРОФЕСІЙНА БЕЗПЕКА: наші сертифікати (certificates) - 3 елементи (НОВЕ)
         const CERTIFICATE_LINKS_DATA = [
-            { emoji: '🥗', theme: "Сертифікат: Основи здорового харчування" },
-            { emoji: '💡', theme: "Сертифікат: Не стій, вмикай світло, тепло, Інтернет" }, 
-            { emoji: '🩹', theme: "Сертифікат: Домедична допомога" }
+            { emoji: '🥗', theme: "Сертифікат: Основи здорового харчування", url: 'https://certificate-mock.com/healthy-food' },
+            { emoji: '💡', theme: "Сертифікат: Не стій, вмикай світло, тепло, Інтернет", url: 'https://certificate-mock.com/energy-safe' }, 
+            { emoji: '🩹', theme: "Сертифікат: Домедична допомога", url: 'https://certificate-mock.com/first-aid' }
         ];
+        
 
-        // Функція для генерації випадкового повороту - ВИДАЛЕНА, щоб забезпечити чистий дизайн (як на зображенні)
+        /**
+         * УНІВЕРСАЛЬНА ФУНКЦІЯ ДЛЯ ГЕНЕРАЦІЇ ІНТЕРАКТИВНОЇ ЗОНИ
+         * @param {Array<Object>} linksData - Масив об'єктів {emoji, theme, url}
+         * @param {string} titleEmoji - Емоджі для заголовка
+         * @param {string} titleText - Текст заголовка
+         * @param {string} description - Опис зони
+         * @param {string} colorClass - Клас кольору Tailwind для заголовка
+         * @returns {string} HTML для інтерактивної зони
+         */
+        function generateInteractiveZone(linksData, titleEmoji, titleText, description, colorClass) {
+            let linksHTML = linksData.map((link, index) => {
+                const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length]; // Циклічний вибір кольорів
+                // ПРИМІТКА: ВИКОРИСТОВУЄМО link.url ЯК АДРЕСУ
+                return `
+                    <a id="link-${currentSectionId}-${index}" 
+                       href="${link.url}" 
+                       target="_blank" 
+                       title="${link.theme}"
+                       class="circle-link ${color} hover:shadow-xl flex items-center justify-center w-20 h-20 rounded-full transition-transform duration-200 transform hover:scale-110">
+                        <span class="text-4xl sm:text-5xl">${link.emoji}</span>
+                    </a>
+                `;
+            }).join('');
+
+            return `
+                <h3 class="mt-10 text-2xl font-bold ${colorClass} border-b pb-2">
+                    ${titleEmoji} ${titleText}
+                </h3>
+                <p class="mt-4 text-gray-600">
+                    ${description}
+                </p>
+
+                <!-- Круглі кнопки-посилання з емодзі -->
+                <div class="mt-8 flex flex-wrap gap-5 justify-center">
+                    ${linksHTML}
+                </div>
+
+                <p class="mt-6 text-sm text-center text-gray-500 italic">
+                    Натисніть на емоджі, щоб перейти до відповідного ресурсу.
+                </p>
+            `;
+        }
 
         /**
          * Перемикання між Головною сторінкою та Сторінкою контенту.
@@ -364,538 +399,227 @@
             // =========================================================================
             let interactiveZoneContent = '';
 
-            // -------------------------------------------------------------------------
-            // 1. ЮРИДИЧНИЙ КОМПАС (legalCompass) - 2 КРУГИ (приклад)
-            // -------------------------------------------------------------------------
-            if (sectionId === 'legalCompass') {
-                // Блок з інтерактивними посиланнями (без підписів, центрований)
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-indigo-700 border-b pb-2">🌐 Інтерактивна зона</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть напрямок для отримання додаткової інформації та ресурсів.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 2 елементи) -->
-                    <div class="mt-6 flex flex-wrap gap-10 justify-center">
-                        <!-- Посилання ВЧИТЕЛЬ -->
-                        <a id="link-teacher" href="https://drive.google.com/drive/folders/1_fDEHXxFvP9xsr0kI1dN-grhNO7UZXBl" target="_blank" title="Вчитель (Права)" class="circle-link bg-red-500 hover:bg-red-600">
-                            <span class="text-4xl sm:text-5xl">🧑‍🏫</span>
-                        </a>
+            switch (sectionId) {
+                // -------------------------------------------------------------------------
+                // 1. БЕЗПЕЧНИЙ СТАРТ (safeStart) - БЕЗ AI-ПОМІЧНИКА
+                // -------------------------------------------------------------------------
+                case 'safeStart':
+                    interactiveZoneContent = `
+                        <h3 class="mt-10 text-2xl font-bold text-gray-700 border-b pb-2">💡 Додаткова інформація</h3>
+                        <p class="mt-4 text-gray-600">
+                            Цей розділ наразі містить лише базові знання. Додаткові інтерактивні інструменти з'являться тут незабаром!
+                        </p>
+                    `;
+                    break;
+                // -------------------------------------------------------------------------
+                // 2. ЮРИДИЧНИЙ КОМПАС (legalCompass) - 2 КРУГИ
+                // -------------------------------------------------------------------------
+                case 'legalCompass':
+                    interactiveZoneContent = generateInteractiveZone(
+                        LEGAL_LINKS_DATA, 
+                        '🌐', 
+                        'Інтерактивна зона (Права)', 
+                        "Оберіть напрямок для отримання додаткової інформації та ресурсів.",
+                        'text-indigo-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 3. КІБЕРБЕЗПЕКА (cyberSafe) - 12 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'cyberSafe':
+                    interactiveZoneContent = generateInteractiveZone(
+                        CYBER_LINKS_DATA, 
+                        '💻', 
+                        'Інтерактивна зона (Кібербезпека)', 
+                        "Використовуйте ці ресурси для глибокого вивчення теми Кібербезпеки. Кожна іконка веде до окремого тематичного посилання.",
+                        'text-indigo-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 4. БЕЗПЕЧНІ КАНІКУЛИ (chillSafe) - 10 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'chillSafe':
+                    interactiveZoneContent = generateInteractiveZone(
+                        CHILL_LINKS_DATA, 
+                        '☀️', 
+                        'Інтерактивна зона (Канікули)', 
+                        "Оберіть сезон або тему, щоб отримати посібник з безпечного відпочинку.",
+                        'text-yellow-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 5. ВОГОНЬ ПІД КОНТРОЛЕМ! (fireCheck) - 6 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'fireCheck':
+                    interactiveZoneContent = generateInteractiveZone(
+                        FIRE_LINKS_DATA, 
+                        '🔥', 
+                        'Інтерактивна зона (Пожежна Безпека)', 
+                        "Оберіть напрямок, щоб детальніше вивчити пожежну безпеку. ",
+                        'text-red-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 6. РУХАЙСЯ СВІДОМО! (roadSmart) - 8 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'roadSmart':
+                    interactiveZoneContent = generateInteractiveZone(
+                        ROAD_LINKS_DATA, 
+                        '🚦', 
+                        'Інтерактивна зона (ПДР)', 
+                        "Оберіть тему, щоб поглибити свої знання про безпеку на дорозі.",
+                        'text-pink-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 7. ЗНАННЯ, ЩО РЯТУЮТЬ ЖИТТЯ (stayCalm) - 8 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'stayCalm':
+                    interactiveZoneContent = generateInteractiveZone(
+                        STAYCALM_LINKS_DATA, 
+                        '🧠', 
+                        'Інтерактивна зона (Життєві Знання)', 
+                        "Оберіть тему, щоб поглибити свої знання про дії у надзвичайних ситуаціях та мінну безпеку.",
+                        'text-pink-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 8. НАВИЧКИ, ЩО РЯТУЮТЬ ЖИТТЯ (beReady) - 3 КРУГИ
+                // -------------------------------------------------------------------------
+                case 'beReady':
+                    interactiveZoneContent = generateInteractiveZone(
+                        BE_READY_LINKS_DATA, 
+                        '🩹', 
+                        'Інтерактивна зона (Перша Допомога)', 
+                        "Оберіть тему, щоб поглибити свої навички надання домедичної допомоги.",
+                        'text-pink-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 9. СТОП, БУЛІНГ! (stopBullying) - 7 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'stopBullying':
+                    interactiveZoneContent = generateInteractiveZone(
+                        STOP_BULLYING_LINKS_DATA, 
+                        '🤝', 
+                        'Інтерактивна зона (Протидія Булінгу)', 
+                        "Оберіть тему, щоб вивчити алгоритми дій.",
+                        'text-orange-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 10. ТИ ЯК? (howAreYou) - 14 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'howAreYou':
+                    interactiveZoneContent = generateInteractiveZone(
+                        HOW_ARE_YOU_LINKS_DATA, 
+                        '💚', 
+                        'Інтерактивна зона (Ментальна Стійкість)', 
+                        "Тут ти знайдеш вправи та ресурси для зміцнення твого ментального здоров'я.",
+                        'text-teal-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 11. ЗДОРОВЕ ХАРЧУВАННЯ (healthyFood) - 2 КРУГИ
+                // -------------------------------------------------------------------------
+                case 'healthyFood':
+                    interactiveZoneContent = generateInteractiveZone(
+                        HEALTHY_FOOD_LINKS_DATA, 
+                        '🍎', 
+                        'Інтерактивна зона (Здорове Харчування)', 
+                        "Оберіть тему, щоб поглибити знання про основи збалансованого харчування. ",
+                        'text-lime-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 12. ЗДОРОВИЙ СПОСІБ ЖИТТЯ (lifestyleTrend) - 14 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'lifestyleTrend':
+                    interactiveZoneContent = generateInteractiveZone(
+                        LIFESTYLE_TREND_LINKS_DATA, 
+                        '🤸', 
+                        'Інтерактивна зона (Здоровий Спосіб Життя)', 
+                        "Дізнайся, як формувати корисні звички.",
+                        'text-cyan-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 13. ВАКЦИНОВАНИЙ = ЗАХИЩЕНИЙ (vaccineProtect) - 5 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'vaccineProtect':
+                    interactiveZoneContent = generateInteractiveZone(
+                        VACCINE_PROTECT_LINKS_DATA, 
+                        '💉', 
+                        'Інтерактивна зона (Вакцинація)', 
+                        "Оберіть тему, щоб дізнатися науково-доказові факти про захист за допомогою щеплень.",
+                        'text-sky-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 14. ПАСТКИ ПОВСЯКДЕННОГО ЖИТТЯ (dailyTraps) - 8 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'dailyTraps':
+                    interactiveZoneContent = generateInteractiveZone(
+                        DAILY_TRAPS_LINKS_DATA, 
+                        '⚠️', 
+                        'Інтерактивна зона (Пастки)', 
+                        "Вивчай приховані небезпеки, які можуть чекати поруч. ",
+                        'text-amber-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 15. ПЕРЕВІР СЕБЕ: тести, ігри, квести (quiz) - 8 КРУГІВ
+                // -------------------------------------------------------------------------
+                case 'quiz':
+                    interactiveZoneContent = generateInteractiveZone(
+                        QUIZ_LINKS_DATA, 
+                        '✅', 
+                        'Інтерактивна зона (Тести та Квести)', 
+                        "Оберіть тему, щоб перейти до тестів, вікторин чи інтерактивних завдань для перевірки своїх знань. Ці посилання вже заповнені.",
+                        'text-emerald-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 16. ПРОФЕСІЙНА БЕЗПЕКА: наші сертифікати (certificates) - 3 КРУГИ
+                // -------------------------------------------------------------------------
+                case 'certificates':
+                    interactiveZoneContent = generateInteractiveZone(
+                        CERTIFICATE_LINKS_DATA, 
+                        '🏅', 
+                        'Інтерактивна зона (Сертифікати)', 
+                        "Ознайомтеся з нашими сертифікатами та дипломами. Ці посилання вже заповнені.",
+                        'text-stone-700'
+                    );
+                    break;
+                // -------------------------------------------------------------------------
+                // 17. СТАНДАРТНИЙ AI-ПОМІЧНИК (для розділів без своєї інтерактивної зони)
+                // -------------------------------------------------------------------------
+                default:
+                    interactiveZoneContent = `
+                        <h3 class="mt-10 text-2xl font-bold text-indigo-700 border-b pb-2">🧠 Інтерактивна зона (AI-помічник)</h3>
+                        <p class="mt-4 text-gray-600">
+                            Використовуй інтелектуального помічника для поглиблення знань з теми 
+                            **"${currentSection.title}"**.
+                        </p>
                         
-                        <!-- Посилання ОХОРОНА ПРАЦІ -->
-                        <a id="link-safety" href="#" target="_blank" title="Охорона Праці" class="circle-link bg-teal-500 hover:bg-teal-600">
-                            <span class="text-4xl sm:text-5xl">👷</span>
-                        </a>
-                    </div>
-                    <p class="mt-4 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 2. КІБЕРБЕЗПЕКА (cyberSafe) - 12 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'cyberSafe') {
-                let cyberLinksHTML = CYBER_LINKS_DATA.map((link, index) => {
-                    const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length]; // Циклічний вибір кольорів
-                    return `
-                        <a id="link-cyber-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
+                        <!-- Форма для AI запиту -->
+                        <div class="mt-6 p-5 bg-gray-50 border border-gray-200 rounded-xl shadow-inner">
+                            <label for="ai-prompt" class="block text-sm font-semibold text-gray-700 mb-2">Твій запит до AI-помічника:</label>
+                            <textarea id="ai-prompt" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Наприклад: 'Створи невеликий тест з 3 питань про основи кібербезпеки.'">${currentSection.content.llmPrompt}</textarea>
+                            <button class="mt-4 px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition duration-300 shadow-lg transform hover:scale-105">
+                                Надіслати запит
+                            </button>
+                        </div>
+
+                        <div id="ai-response" class="mt-8 p-5 bg-green-50 border-l-4 border-green-500 text-green-800 rounded-r-lg shadow-sm hidden">
+                            <h4 class="font-bold mb-2 flex items-center text-xl">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-green-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                Відповідь AI
+                            </h4>
+                            <p>Тут з'явиться відповідь на ваш запит.</p>
+                        </div>
                     `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-indigo-700 border-b pb-2">🌐 Інтерактивна зона</h3>
-                    <p class="mt-4 text-gray-600">
-                        Використовуйте ці ресурси для глибокого вивчення теми Кібербезпеки.
-                        Кожна іконка веде до окремого тематичного посилання.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 12 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${cyberLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь лажка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 3. БЕЗПЕЧНІ КАНІКУЛИ (chillSafe) - 10 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'chillSafe') {
-                 let chillLinksHTML = CHILL_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length]; 
-                    return `
-                        <a id="link-chill-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-indigo-700 border-b pb-2">☀️ Інтерактивна зона</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть сезон або тему, щоб отримати посібник з безпечного відпочинку.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 10 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${chillLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 4. ВОГОНЬ ПІД КОНТРОЛЕМ! (fireCheck) - 6 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'fireCheck') {
-                 let fireLinksHTML = FIRE_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length]; 
-                    return `
-                        <a id="link-fire-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-indigo-700 border-b pb-2">🔥 Інтерактивна зона</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть напрямок, щоб детальніше вивчити пожежну безпеку.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 6 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${fireLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 5. РУХАЙСЯ СВІДОМО! (roadSmart) - 8 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'roadSmart') {
-                 let roadLinksHTML = ROAD_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length]; 
-                    return `
-                        <a id="link-road-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-indigo-700 border-b pb-2">🚦 Інтерактивна зона (ПДР)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть тему, щоб поглибити свої знання про безпеку на дорозі, як пішохода, так і велосипедиста.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 8 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${roadLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 6. ЗНАННЯ, ЩО РЯТУЮТЬ ЖИТТЯ (stayCalm) - 8 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'stayCalm') {
-                 let stayCalmLinksHTML = STAYCALM_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length]; 
-                    return `
-                        <a id="link-staycalm-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-indigo-700 border-b pb-2">🧠 Інтерактивна зона (Життєві Знання)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть тему, щоб поглибити свої знання про дії у надзвичайних ситуаціях та мінну безпеку.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 8 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${stayCalmLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 7. НАВИЧКИ, ЩО РЯТУЮТЬ ЖИТТЯ (beReady) - 3 КРУГИ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'beReady') {
-                 let beReadyLinksHTML = BE_READY_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    // Вибираємо кольори з початкової частини спектру для контрасту
-                    const color = INTERACTIVE_COLORS[index * 2 % INTERACTIVE_COLORS.length]; 
-                    return `
-                        <a id="link-beready-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-pink-700 border-b pb-2">🩹 Інтерактивна зона (Перша Допомога)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть тему, щоб поглибити свої навички надання домедичної допомоги у критичних ситуаціях.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 3 елементи) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${beReadyLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 8. СТОП, БУЛІНГ! (stopBullying) - 7 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'stopBullying') {
-                 let stopBullyingLinksHTML = STOP_BULLYING_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length]; 
-                    return `
-                        <a id="link-stopbullying-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-orange-700 border-b pb-2">🤝 Інтерактивна зона (Протидія Булінгу)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть тему, щоб вивчити алгоритми дій для постраждалого, свідка та винного. Пам'ятайте: мовчання - не вихід.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 7 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${stopBullyingLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 9. ТИ ЯК? (howAreYou) - 14 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'howAreYou') {
-                 let howAreYouLinksHTML = HOW_ARE_YOU_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори (повторюються 12, потім починаються знову)
-                    const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length]; 
-                    return `
-                        <a id="link-howareyou-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-teal-700 border-b pb-2">💚 Інтерактивна зона (Ментальна Стійкість)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Тут ти знайдеш вправи та ресурси для зміцнення твого ментального здоров'я, подолання стресу та тривоги.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 14 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${howAreYouLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 10. ЗДОРОВЕ ХАРЧУВАННЯ (healthyFood) - 2 КРУГИ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'healthyFood') {
-                 let healthyFoodLinksHTML = HEALTHY_FOOD_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index * 5 % INTERACTIVE_COLORS.length]; // Вибираємо контрастні кольори
-                    return `
-                        <a id="link-healthyfood-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-lime-700 border-b pb-2">🍎 Інтерактивна зона (Здорове Харчування)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть тему, щоб поглибити знання про основи збалансованого харчування та його вплив на твоє здоров'я.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 2 елементи) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${healthyFoodLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 11. ЗДОРОВИЙ СПОСІБ ЖИТТЯ (lifestyleTrend) - 14 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'lifestyleTrend') {
-                 let lifestyleTrendLinksHTML = LIFESTYLE_TREND_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори (повторюються 12, потім починаються знову)
-                    const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length]; 
-                    return `
-                        <a id="link-lifestyletrend-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-cyan-700 border-b pb-2">🤸 Інтерактивна зона (Здоровий Спосіб Життя)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Дізнайся, як формувати корисні звички, уникати залежностей та підтримувати фізичне та ментальне здоров'я.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 14 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${lifestyleTrendLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 12. ВАКЦИНОВАНИЙ = ЗАХИЩЕНИЙ (vaccineProtect) - 5 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'vaccineProtect') {
-                 let vaccineProtectLinksHTML = VACCINE_PROTECT_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index * 2 % INTERACTIVE_COLORS.length]; // Вибираємо контрастні кольори
-                    return `
-                        <a id="link-vaccineprotect-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-sky-700 border-b pb-2">💉 Інтерактивна зона (Вакцинація)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Оберіть тему, щоб дізнатися науково-доказові факти про захист за допомогою щеплень та їх важливість.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 5 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${vaccineProtectLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 13. ПАСТКИ ПОВСЯКДЕННОГО ЖИТТЯ (dailyTraps) - 8 КРУГІВ
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'dailyTraps') {
-                 let dailyTrapsLinksHTML = DAILY_TRAPS_LINKS_DATA.map((link, index) => {
-                    // Використовуємо INTERACTIVE_COLORS, щоб мати різноманітні кольори
-                    const color = INTERACTIVE_COLORS[index * 3 % INTERACTIVE_COLORS.length]; // Вибираємо контрастні кольори
-                    return `
-                        <a id="link-dailytraps-${index}" href="#" target="_blank" title="${link.theme}"
-                           class="circle-link ${color} hover:shadow-xl">
-                            <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-                        </a>
-                    `;
-                }).join('');
-
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-amber-700 border-b pb-2">⚠️ Інтерактивна зона (Пастки)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Вивчай приховані небезпеки, які можуть чекати вдома, на вулиці чи в інформаційному просторі, та дізнайся, як їх уникнути.
-                    </p>
-
-                    <!-- Круглі кнопки-посилання з емодзі (CENTERED, 8 елементів) -->
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        ${dailyTrapsLinksHTML}
-                    </div>
-                    <p class="mt-6 text-sm text-center text-gray-500 italic">
-                        Будь ласка, оновіть посилання у коді для активації кнопок.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 14. ПЕРЕВІР СЕБЕ: тести, ігри, квести (quiz) - 8 КРУГІВ
-            // -------------------------------------------------------------------------
-          } else if (sectionId === 'quiz') {
-    // Дані для 8 посилань (тести, квести тощо)
-    const QUIZ_LINKS_DATA = [
-        { emoji: "🩹", theme: "Перша медична допомога при опіках", url: "https://wordwall.net/uk/resource/13144641/%d0%b7%d0%b0%d1%85%d0%b8%d1%81%d1%82-%d1%83%d0%ba%d1%80%d0%b0%d1%97%d0%bd%d0%b8/%d0%bf%d0%b5%d1%80%d1%88%d0%b0-%d0%b4%d0%be%d0%bf%d0%be%d0%bc%d0%be%d0%b3%d0%b0-%d0%bf%d1%80%d0%b8-%d1%82%d0%b5%d1%80%d0%bc%d1%96%d1%87%d0%bd%d0%b8%d1%85-%d0%be%d0%bf%d1%96%d0%ba%d0%b0%d1%85" },
-        { emoji: "⚡", theme: "Домедична допомога при ураженні струмом", url: "https://wordwall.net/uk/resource/9819525/%d0%b7%d0%b0%d1%85%d0%b8%d1%81%d1%82-%d1%83%d0%ba%d1%80%d0%b0%d1%97%d0%bd%d0%b8/%d1%83%d1%80%d0%b0%d0%b6%d0%b5%d0%bd%d0%bd%d1%8f-%d0%b5%d0%bb%d0%b5%d0%ba%d1%82%d1%80%d0%b8%d1%87%d0%bd%d0%b8%d0%bc-%d1%81%d1%82%d1%80%d1%83%d0%bc%d0%be%d0%bc-%d0%b1%d0%bb%d0%b8%d1%81%d0%ba%d0%b0%d0%b2%d0%ba%d0%be%d1%8e" },
-        { emoji: "🚑", theme: "Домедична допомога", url: "https://learningapps.org/watch?v=p1ns8roon24" },
-        { emoji: "🛡️", theme: "Способи захисту у надзвичайних ситуаціях", url: "https://wordwall.net/uk/resource/13185160/%d0%b7%d0%b0%d1%85%d0%b8%d1%81%d1%82-%d1%83%d0%ba%d1%80%d0%b0%d1%97%d0%bd%d0%b8/%d0%be%d1%81%d0%bd%d0%be%d0%b2%d0%bd%d1%96-%d1%81%d0%bf%d0%be%d1%81%d0%be%d0%b1%d0%b8-%d0%b7%d0%b0%d1%85%d0%b8%d1%81%d1%82%d1%83-%d0%bd%d0%b0%d1%81%d0%b5%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f-%d0%b2" },
-        { emoji: "😟", theme: "Кризова ситуація", url: "https://vseosvita.ua/webquest/play?code=owysi677" },
-        { emoji: "🌸", theme: "Передбачення на весняні канікули", url: "https://docs.google.com/presentation/d/1MPuNkmCLyx-EwPqF2frxSV6-aHpw7yKB/edit" },
-        { emoji: "☀️", theme: "Передбачення на літні канікули", url: "https://docs.google.com/presentation/d/1acZwrD8fzrS27MbLkZY8JbJfh7lRl_wU/edit" },
-        { emoji: "❄️", theme: "Передбачення на зимові канікули", url: "https://docs.google.com/presentation/d/1e8puExo1AamlW9BGhcX8Mo2qf7drKViw/edit" }
-    ];
-
-    // Кольори для кнопок (чергуються)
-    const INTERACTIVE_COLORS = [
-        "bg-blue-100 hover:bg-blue-200",
-        "bg-pink-100 hover:bg-pink-200",
-        "bg-yellow-100 hover:bg-yellow-200",
-        "bg-green-100 hover:bg-green-200",
-        "bg-purple-100 hover:bg-purple-200",
-        "bg-orange-100 hover:bg-orange-200",
-        "bg-teal-100 hover:bg-teal-200",
-        "bg-rose-100 hover:bg-rose-200"
-    ];
-
-    // Генерація посилань з емодзі
-    let quizLinksHTML = QUIZ_LINKS_DATA.map((link, index) => {
-        const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length];
-        return `
-            <a id="link-quiz-${index}" 
-               href="${link.url}" 
-               target="_blank" 
-               title="${link.theme}"
-               class="circle-link ${color} hover:shadow-xl flex items-center justify-center w-20 h-20 rounded-full transition-transform duration-200 transform hover:scale-110">
-                <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-            </a>
-        `;
-    }).join('');
-
-    // Основний контент секції
-    interactiveZoneContent = `
-        <h3 class="mt-10 text-2xl font-bold text-emerald-700 border-b pb-2">
-            ✅ Інтерактивна зона (Тести та Квести)
-        </h3>
-        <p class="mt-4 text-gray-600">
-            Оберіть тему, щоб перейти до тестів, вікторин чи інтерактивних завдань для перевірки своїх знань.
-        </p>
-
-        <!-- Круглі кнопки-посилання з емодзі (8 елементів) -->
-        <div class="mt-8 flex flex-wrap gap-5 justify-center">
-            ${quizLinksHTML}
-        </div>
-
-        <p class="mt-6 text-sm text-center text-gray-500 italic">
-            Натисніть на емоджі, щоб розпочати тест чи квест.
-        </p>
-    `;
-            // -------------------------------------------------------------------------
-            // 15. ПРОФЕСІЙНВ БЕЗПЕКА: наші сертифікати (certificates) - 3 КРУГИ (НОВЕ)
-            // -------------------------------------------------------------------------
-} else if (sectionId === 'certificates') {
-    // Дані для посилань
-    const CERTIFICATE_LINKS_DATA = [
-        { emoji: "🎓", theme: "Сертифікат домедична допомога", url: "https://drive.google.com/drive/folders/1OdLsWn1jZRSPM_ItCTjnu-lrXITjDFu4" },
-        { emoji: "📜", theme: "Сертифікат не стій - вмикай: світло, тепло, інтернет", url: "https://drive.google.com/drive/folders/1AiRa8nCXtW7X2yCs0AJEHGsf_N6BAjH6" },
-        { emoji: "🏆", theme: "Сертифікат основи здорового харчувнн", url: "https://drive.google.com/drive/folders/1CMPOqwys_lilJkyd69RbYtrxymRMNtV4" }
-    ];
-
-    // Кольори для кнопок (використовуються циклічно)
-    const INTERACTIVE_COLORS = [
-        "bg-blue-100 hover:bg-blue-200",
-        "bg-pink-100 hover:bg-pink-200",
-        "bg-yellow-100 hover:bg-yellow-200",
-        "bg-green-100 hover:bg-green-200",
-        "bg-purple-100 hover:bg-purple-200"
-    ];
-
-    // Генерація кнопок з емоджі
-    let certificateLinksHTML = CERTIFICATE_LINKS_DATA.map((link, index) => {
-        const color = INTERACTIVE_COLORS[index % INTERACTIVE_COLORS.length];
-        return `
-            <a id="link-cert-${index}" 
-               href="${link.url}" 
-               target="_blank" 
-               title="${link.theme}"
-               class="circle-link ${color} hover:shadow-xl flex items-center justify-center w-20 h-20 rounded-full transition-transform duration-200 transform hover:scale-110">
-                <span class="text-4xl sm:text-5xl">${link.emoji}</span>
-            </a>
-        `;
-    }).join('');
-
-    // Основний контент секції
-    interactiveZoneContent = `
-        <h3 class="mt-10 text-2xl font-bold text-stone-700 border-b pb-2">
-            🏅 Інтерактивна зона (Сертифікати)
-        </h3>
-        <p class="mt-4 text-gray-600">
-            Ознайомтеся з нашими сертифікатами та дипломами, що підтверджують професійну кваліфікацію викладачів, які працювали над цим проєктом.
-        </p>
-
-        <!-- Круглі кнопки-посилання з емодзі -->
-        <div class="mt-8 flex flex-wrap gap-5 justify-center">
-            ${certificateLinksHTML}
-        </div>
-
-        <p class="mt-6 text-sm text-center text-gray-500 italic">
-            Натисніть на емоджі, щоб переглянути сертифікати.
-        </p>
-    `;
-
-
-
-            // -------------------------------------------------------------------------
-            // 16. БЕЗПЕЧНИЙ СТАРТ (safeStart) - БЕЗ AI-ПОМІЧНИКА
-            // -------------------------------------------------------------------------
-            } else if (sectionId === 'safeStart') {
-                 // Згідно з запитом користувача, видаляємо AI-помічник
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-gray-700 border-b pb-2">💡 Додаткова інформація</h3>
-                    <p class="mt-4 text-gray-600">
-                        Безпека — це не просто знання, це стиль життя.
-На цій дошці ми зібрали матеріали, що допоможуть кожному учаснику освітнього процесу навчитися діяти обережно, відповідально та впевнено у будь-якій ситуації.
-                    </p>
-                `;
-            // -------------------------------------------------------------------------
-            // 17. СТАНДАРТНИЙ AI-ПОМІЧНИК (для всіх інших розділів, які не мають власних зон)
-            // -------------------------------------------------------------------------
-            } else {
-                // Стандартний блок для AI-помічника в інших розділах
-                interactiveZoneContent = `
-                    <h3 class="mt-10 text-2xl font-bold text-indigo-700 border-b pb-2">🧠 Інтерактивна зона (AI-помічник)</h3>
-                    <p class="mt-4 text-gray-600">
-                        Використовуй інтелектуального помічника для поглиблення знань з теми 
-                        **"${currentSection.title}"**.
-                    </p>
-                    
-                    <!-- Форма для AI запиту -->
-                    <div class="mt-6 p-5 bg-gray-50 border border-gray-200 rounded-xl shadow-inner">
-                        <label for="ai-prompt" class="block text-sm font-semibold text-gray-700 mb-2">Твій запит до AI-помічника:</label>
-                        <textarea id="ai-prompt" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Наприклад: 'Створи невеликий тест з 3 питань про основи кібербезпеки.'">${currentSection.content.llmPrompt}</textarea>
-                        <button class="mt-4 px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition duration-300 shadow-lg transform hover:scale-[1.02]">
-                            Надіслати запит
-                        </button>
-                    </div>
-
-                    <div id="ai-response" class="mt-8 p-5 bg-green-50 border-l-4 border-green-500 text-green-800 rounded-r-lg shadow-sm hidden">
-                        <h4 class="font-bold mb-2 flex items-center text-xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-green-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                            Відповідь AI
-                        </h4>
-                        <p>Тут з'явиться відповідь на ваш запит.</p>
-                    </div>
-                `;
+                    break;
             }
             // =========================================================================
             
@@ -1006,13 +730,18 @@
             </div>
         </div>
     </div>
-<!-- ДОДАНИЙ ФУТЕР -->
+<!-- ФУТЕР -->
     <footer class="mt-12 mb-4 text-center">
+        <!-- Невидиме (для зору) посилання на GitHub -->
+        <a href="https://github.com/YourProjectLink" 
+           target="_blank" 
+           class="sr-only" 
+           aria-label="Посилання на репозиторій проекту на GitHub">
+            Посилання на GitHub
+        </a>
         <p class="text-sm text-gray-500 opacity-60 max-w-2xl mx-auto px-4">
             Заклад загальної середньої освіти І-ІІІ ступенів №10 Торецької міської військово-цивільної адміністрації Бахмутського району Донецької області
         </p>
     </footer>
 </body>
 </html>
-
-
